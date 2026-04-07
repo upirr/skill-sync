@@ -1,0 +1,19 @@
+{
+  "sources": {
+    "superpowers": {
+      "repo": "obra/superpowers",
+      "subtreePrefix": "sources/superpowers",
+      "plugins": [
+        { "name": "superpowers", "dir": "skills", "format": "skills", "include": "*" }
+      ]
+    },
+    "claude-official": {
+      "repo": "anthropics/claude-plugins-official",
+      "subtreePrefix": "sources/claude-official",
+      "plugins": [
+        { "name": "skill-creator", "dir": "plugins/skill-creator/skills", "format": "skills", "include": "*" },
+        { "name": "commit-commands", "dir": "plugins/commit-commands/commands", "format": "commands", "include": "*" }
+      ]
+    }
+  }
+}
