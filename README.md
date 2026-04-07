@@ -17,13 +17,13 @@ Run once from your project root:
 # Cursor rules
 git subtree add \
   --prefix=.cursor/rules \
-  https://github.com/upirr/skill-sync.git cursor-rules \
+  git@github.com:upirr/skill-sync.git cursor-rules \
   --squash
 
 # OpenCode skills
 git subtree add \
   --prefix=.opencode/skills \
-  https://github.com/upirr/skill-sync.git opencode-skills \
+  git@github.com:upirr/skill-sync.git opencode-skills \
   --squash
 ```
 
@@ -38,19 +38,19 @@ Pull the latest converted skills:
 ```bash
 git subtree pull \
   --prefix=.cursor/rules \
-  https://github.com/upirr/skill-sync.git cursor-rules \
+  git@github.com:upirr/skill-sync.git cursor-rules \
   --squash
 
 git subtree pull \
   --prefix=.opencode/skills \
-  https://github.com/upirr/skill-sync.git opencode-skills \
+  git@github.com:upirr/skill-sync.git opencode-skills \
   --squash
 ```
 
 Or add to your project's `Makefile`:
 
 ```makefile
-SKILL_SYNC_REPO := https://github.com/upirr/skill-sync.git
+SKILL_SYNC_REPO := git@github.com:upirr/skill-sync.git
 
 sync-skills:
 	git subtree pull --prefix=.cursor/rules  $(SKILL_SYNC_REPO) cursor-rules  --squash
