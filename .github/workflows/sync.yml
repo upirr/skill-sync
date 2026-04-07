@@ -1,0 +1,69 @@
+name: Sync Skills
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Every Monday 09:00 UTC
+  workflow_dispatch:        # Manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add subtree remotes
+        run: |
+          git remote add superpowers https://github.com/obra/superpowers.git || true
+          git remote add claude-official https://github.com/anthropics/claude-plugins-official.git || true
+          git fetch superpowers
+          git fetch claude-official
+
+      - name: Pull superpowers subtree
+        run: |
+          git subtree pull \
+            --prefix=sources/superpowers \
+            superpowers main \
+            --squash \
+            -m "chore: sync superpowers source" || echo "No changes in superpowers"
+
+      - name: Pull claude-official subtree
+        run: |
+          git subtree pull \
+            --prefix=sources/claude-official \
+            claude-official main \
+            --squash \
+            -m "chore: sync claude-official source" || echo "No changes in claude-official"
+
+      - name: Run converter
+        run: node scripts/convert.mjs
+
+      - name: Commit dist if changed
+        run: |
+          git add dist/
+          if git diff --cached --quiet; then
+            echo "No dist changes, skipping commit"
+          else
+            git commit -m "chore: sync skills $(date -u +%Y-%m-%d)"
+          fi
+
+      - name: Push distribution branches
+        run: |
+          git subtree split --prefix=dist/cursor -b cursor-rules
+          git push origin cursor-rules --force
+
+          git subtree split --prefix=dist/opencode -b opencode-skills
+          git push origin opencode-skills --force
+
+      - name: Push main
+        run: git push origin main
