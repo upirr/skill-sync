@@ -33,7 +33,13 @@ Both directories are committed to your project — teammates get them automatica
 
 ## Updating
 
-Pull the latest converted skills:
+Skills are republished to this repo weekly (Monday 09:00 UTC). To trigger an immediate sync:
+
+```bash
+gh workflow run sync.yml --repo upirr/skill-sync
+```
+
+Once the workflow completes, pull the updated skills into your project:
 
 ```bash
 git subtree pull \
@@ -47,17 +53,7 @@ git subtree pull \
   --squash
 ```
 
-Or add to your project's `Makefile`:
-
-```makefile
-SKILL_SYNC_REPO := git@github.com:upirr/skill-sync.git
-
-sync-skills:
-	git subtree pull --prefix=.cursor/rules  $(SKILL_SYNC_REPO) cursor-rules  --squash
-	git subtree pull --prefix=.opencode/skills $(SKILL_SYNC_REPO) opencode-skills --squash
-```
-
-Then run: `make sync-skills`
+These two commands update the committed files in your project — commit the result and push.
 
 ---
 
