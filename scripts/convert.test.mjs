@@ -1,7 +1,7 @@
 import { strict as assert } from 'assert'
 import { convertSkillToCursor } from './convert.mjs'
 
-// Test 1: keeps description, strips name and allowed-tools, adds alwaysApply
+// Test 1: keeps name + description, strips allowed-tools, adds alwaysApply
 {
   const input = `---
 name: my-skill
@@ -15,13 +15,13 @@ Content here.
 `
   const result = convertSkillToCursor('my-skill', input)
   assert.ok(result.startsWith('---\n'), 'starts with frontmatter')
+  assert.ok(result.includes('name: my-skill'), 'includes name')
   assert.ok(result.includes('description: Use when doing something special'), 'keeps description')
   assert.ok(result.includes('alwaysApply: false'), 'adds alwaysApply')
-  assert.ok(!result.includes('name:'), 'strips name')
   assert.ok(!result.includes('allowed-tools:'), 'strips allowed-tools')
   assert.ok(result.includes('# My Skill'), 'preserves body')
   assert.ok(result.includes('Content here.'), 'preserves body content')
-  console.log('✓ strips name + allowed-tools, keeps description, adds alwaysApply: false')
+  console.log('✓ keeps name, strips allowed-tools, keeps description, adds alwaysApply: false')
 }
 
 // Test 2: handles missing name (commands format has no name field)
