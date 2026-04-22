@@ -1,6 +1,6 @@
 # Makefile
 
-.PHONY: convert test sync-skills
+.PHONY: convert test sync-agents
 
 ## Run the skill converter locally (regenerates dist/)
 convert:
@@ -10,9 +10,9 @@ convert:
 test:
 	node scripts/convert.test.mjs
 
-## Copy latest skills into a consuming project.
-## Usage: make sync-skills TARGET=/path/to/project/.cursor/rules/personal
-TARGET ?= .cursor/rules/personal
+## Copy skills into a .agents/skills/ directory (Cursor Agent Skills format).
+## Usage: make sync-agents AGENTS_TARGET=/path/to/project/.agents/skills
+AGENTS_TARGET ?= .agents/skills
 
-sync-skills:
-	cp dist/cursor/*.mdc $(TARGET)/
+sync-agents:
+	cp -r dist/opencode/* $(AGENTS_TARGET)/
