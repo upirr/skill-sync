@@ -16,5 +16,5 @@ test:
 REPO ?= git@github.com:upirr/skill-sync.git
 
 sync-skills:
-	git subtree pull --prefix=.cursor/rules  $(REPO) cursor-rules  --squash
-	git subtree pull --prefix=.opencode/skills $(REPO) opencode-skills --squash
+	git subtree pull --prefix=.cursor/rules/skill-sync $(REPO) cursor-rules  --squash
+	git subtree pull --prefix=.opencode/skills          $(REPO) opencode-skills --squash

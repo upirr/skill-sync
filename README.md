@@ -16,7 +16,7 @@ Run once from your project root:
 ```bash
 # Cursor rules
 git subtree add \
-  --prefix=.cursor/rules \
+  --prefix=.cursor/rules/skill-sync \
   git@github.com:upirr/skill-sync.git cursor-rules \
   --squash
 
@@ -27,7 +27,11 @@ git subtree add \
   --squash
 ```
 
+Skills land in `.cursor/rules/skill-sync/` — separate from your project's own rules. Cursor picks up `.mdc` files recursively, so no extra config needed.
+
 Both directories are committed to your project — teammates get them automatically on clone.
+
+> **⚠️ Don't use `--prefix=.cursor/rules`** — git subtree will merge into the existing directory and overwrite your custom rules.
 
 ---
 
@@ -43,7 +47,7 @@ Once the workflow completes, pull the updated skills into your project:
 
 ```bash
 git subtree pull \
-  --prefix=.cursor/rules \
+  --prefix=.cursor/rules/skill-sync \
   git@github.com:upirr/skill-sync.git cursor-rules \
   --squash
 
