@@ -41,7 +41,7 @@ function buildDistribution(config) {
   // Clean and recreate dist
   rmSync(join(ROOT, 'dist/cursor'), { recursive: true, force: true })
   rmSync(join(ROOT, 'dist/opencode'), { recursive: true, force: true })
-  mkdirSync(join(ROOT, 'dist/cursor/skill-sync'), { recursive: true })
+  mkdirSync(join(ROOT, 'dist/cursor'), { recursive: true })
   mkdirSync(join(ROOT, 'dist/opencode'), { recursive: true })
 
   for (const [sourceName, source] of Object.entries(config.sources)) {
@@ -70,7 +70,7 @@ function buildDistribution(config) {
           // Cursor: convert SKILL.md → .mdc
           const content = readFileSync(skillMdPath, 'utf8')
           writeFileSync(
-            join(ROOT, 'dist/cursor/skill-sync', `${entry.name}.mdc`),
+            join(ROOT, 'dist/cursor', `${entry.name}.mdc`),
             convertSkillToCursor(entry.name, content)
           )
           console.log(`  ✓ ${entry.name}`)
@@ -90,7 +90,7 @@ function buildDistribution(config) {
 
           // Cursor: convert → .mdc
           writeFileSync(
-            join(ROOT, 'dist/cursor/skill-sync', `${commandName}.mdc`),
+            join(ROOT, 'dist/cursor', `${commandName}.mdc`),
             convertSkillToCursor(commandName, content)
           )
           console.log(`  ✓ ${commandName} (command)`)

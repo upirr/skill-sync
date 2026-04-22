@@ -10,11 +10,9 @@ convert:
 test:
 	node scripts/convert.test.mjs
 
-## Pull latest skills into a consuming project.
-## Run this from the root of the project that has installed skill-sync via git subtree.
-## Usage: make sync-skills REPO=git@github.com:upirr/skill-sync.git
-REPO ?= git@github.com:upirr/skill-sync.git
+## Copy latest skills into a consuming project.
+## Usage: make sync-skills TARGET=/path/to/project/.cursor/rules/personal
+TARGET ?= .cursor/rules/personal
 
 sync-skills:
-	git subtree pull --prefix=.cursor/rules/skill-sync $(REPO) cursor-rules  --squash
-	git subtree pull --prefix=.opencode/skills          $(REPO) opencode-skills --squash
+	cp dist/cursor/*.mdc $(TARGET)/

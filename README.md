@@ -11,53 +11,31 @@ Aggregates CC skills from public repos and distributes them for [Cursor](https:/
 
 ## Installation
 
-Run once from your project root:
+Clone this repo and copy skills into your project's gitignored directory:
 
 ```bash
-# Cursor rules
-git subtree add \
-  --prefix=.cursor/rules/skill-sync \
-  git@github.com:upirr/skill-sync.git cursor-rules \
-  --squash
-
-# OpenCode skills
-git subtree add \
-  --prefix=.opencode/skills \
-  git@github.com:upirr/skill-sync.git opencode-skills \
-  --squash
+git clone git@github.com:upirr/skill-sync.git /tmp/skill-sync
+cp /tmp/skill-sync/dist/cursor/*.mdc .cursor/rules/personal/
 ```
 
-Skills land in `.cursor/rules/skill-sync/` — separate from your project's own rules. Cursor picks up `.mdc` files recursively, so no extra config needed.
-
-Both directories are committed to your project — teammates get them automatically on clone.
-
-> **⚠️ Don't use `--prefix=.cursor/rules`** — git subtree will merge into the existing directory and overwrite your custom rules.
+Add `.cursor/rules/personal/` to `.gitignore` if not already there. Cursor picks up `.mdc` files recursively.
 
 ---
 
 ## Updating
 
-Skills are republished to this repo weekly (Monday 09:00 UTC). To trigger an immediate sync:
+Skills are republished weekly (Monday 09:00 UTC). To trigger an immediate sync:
 
 ```bash
 gh workflow run sync.yml --repo upirr/skill-sync
 ```
 
-Once the workflow completes, pull the updated skills into your project:
+Then pull and copy:
 
 ```bash
-git subtree pull \
-  --prefix=.cursor/rules/skill-sync \
-  git@github.com:upirr/skill-sync.git cursor-rules \
-  --squash
-
-git subtree pull \
-  --prefix=.opencode/skills \
-  git@github.com:upirr/skill-sync.git opencode-skills \
-  --squash
+cd /tmp/skill-sync && git pull
+cp dist/cursor/*.mdc /path/to/your/project/.cursor/rules/personal/
 ```
-
-These two commands update the committed files in your project — commit the result and push.
 
 ---
 
